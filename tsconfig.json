@@ -23,6 +23,7 @@
     "jsx": "preserve",
     "plugins": [{ "name": "next" }],
     "incremental": true,
+    "tsBuildInfoFile": "node_modules/.cache/tsbuildinfo.json",
 
     /* Path Aliases */
     "baseUrl": ".",
@@ -31,12 +32,11 @@
     }
   },
   "include": [
-    "next-env.d.ts",
+    "**/*.js",
     "**/*.ts",
     "**/*.tsx",
-    "**/*.cjs",
-    "**/*.js",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "next-env.d.ts"
   ],
   "exclude": ["node_modules"]
 }
