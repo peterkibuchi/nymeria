@@ -30,7 +30,7 @@ importers:
         specifier: ^15.4.3
         version: 15.4.4(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       postgres:
-        specifier: ^3.4.4
+        specifier: ^3.4.7
         version: 3.4.7
       react:
         specifier: ^19.1.0

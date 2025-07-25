@@ -27,7 +27,7 @@
     "drizzle-orm": "^0.41.0",
     "nanoid": "^5.1.5",
     "next": "^15.4.3",
-    "postgres": "^3.4.4",
+    "postgres": "^3.4.7",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "zod": "^4.0.5"
