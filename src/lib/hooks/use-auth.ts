@@ -3,18 +3,10 @@ import { useRouter } from "next/navigation";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 import { getNymeriaAuth, type EnhancedSession } from "~/lib/auth/client";
+import type { User } from "~/server/db/schema";
 
-export interface AuthUser {
-  id: string;
-  did: string;
-  handle: string;
-  displayName?: string;
-  avatar?: string;
-  description?: string;
-  pds: string;
-  preferences: Record<string, unknown>;
-  lastSeenAt: string;
-}
+// Use the database User type directly instead of duplicating
+export type AuthUser = User;
 
 // Query keys
 export const authKeys = {
@@ -69,7 +61,10 @@ export function useAuth() {
       return await getNymeriaAuth().restoreSession(currentDid);
     },
     enabled: !!currentDid,
-    staleTime: 2 * 60 * 1000, // 2 minutes
+    staleTime: 5 * 60 * 1000, // 5 minutes - longer for session data
+    gcTime: 10 * 60 * 1000, // 10 minutes garbage collection
+    retry: 1, // Reduce retries for auth failures
+    refetchOnWindowFocus: false, // Don't refetch on window focus for auth
   });
 
   // Get user data from database

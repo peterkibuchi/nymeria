@@ -119,11 +119,13 @@ export class NymeriaAuth {
       sessionId: this.sessionId,
     };
 
-    console.log("🚀 Starting OAuth sign-in:", {
-      ident,
-      sessionId: this.sessionId,
-      redirectUrl: state.redirect,
-    });
+    if (process.env.NODE_ENV === "development") {
+      console.log("🚀 Starting OAuth sign-in:", {
+        ident,
+        sessionId: this.sessionId,
+        redirectUrl: state.redirect,
+      });
+    }
 
     await this.oauthClient.signIn(ident, {
       state: JSON.stringify(state),
