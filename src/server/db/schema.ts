@@ -52,13 +52,14 @@ export interface UserPreferences {
 export const users = createTable(
   "users",
   (d) => ({
-    id: d.uuid("id").primaryKey(),
+    id: d.uuid("id").primaryKey().defaultRandom(),
     did: d.text("did").notNull().unique(), // AT Protocol DID
     handle: d.text("handle").notNull(), // Current handle (can change)
     displayName: d.text("display_name"),
     avatar: d.text("avatar"), // Avatar URL
     banner: d.text("banner"), // Banner URL
-    pds: d.text("pds").notNull(), // Personal Data Server URL
+    description: d.text("description"), // Profile description/bio
+    pds: d.text("pds"), // Personal Data Server URL (optional, will be determined from DID)
     lastSeenAt: d.timestamp("last_seen_at").defaultNow().notNull(),
     preferences: d.jsonb("preferences").$type<UserPreferences>().default({}),
     isActive: d.boolean("is_active").default(true).notNull(),
@@ -77,7 +78,7 @@ export const users = createTable(
 export const userSessions = createTable(
   "user_sessions",
   (d) => ({
-    id: d.uuid("id").primaryKey(),
+    id: d.uuid("id").primaryKey().defaultRandom(),
     userId: d
       .uuid("user_id")
       .references(() => users.id, { onDelete: "cascade" })
@@ -103,7 +104,7 @@ export const userSessions = createTable(
 export const blogMetadata = createTable(
   "blog_metadata",
   (d) => ({
-    id: d.serial("id").primaryKey(),
+    id: d.uuid("id").primaryKey().defaultRandom(),
     authorDid: d.text("author_did").notNull(),
     rkey: d.text("rkey").notNull(),
     entryTitle: d.text("entry_title"),
@@ -129,7 +130,7 @@ export const blogMetadata = createTable(
 export const blogMentions = createTable(
   "blog_mentions",
   (d) => ({
-    id: d.serial("id").primaryKey(),
+    id: d.uuid("id").primaryKey().defaultRandom(),
     subjectAtUri: d.text("subject_at_uri").notNull(),
     postAtUri: d.text("post_at_uri").notNull(),
     rec: d.jsonb("rec"),
@@ -147,7 +148,7 @@ export const blogMentions = createTable(
 export const userConnections = createTable(
   "user_connections",
   (d) => ({
-    id: d.uuid("id").primaryKey(),
+    id: d.uuid("id").primaryKey().defaultRandom(),
     primaryUserId: d
       .uuid("primary_user_id")
       .references(() => users.id, { onDelete: "cascade" })
