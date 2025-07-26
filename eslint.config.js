@@ -1,4 +1,5 @@
 import { FlatCompat } from "@eslint/eslintrc";
+import pluginQuery from "@tanstack/eslint-plugin-query";
 // @ts-ignore -- no types for this plugin
 import drizzle from "eslint-plugin-drizzle";
 import tseslint from "typescript-eslint";
@@ -18,6 +19,7 @@ export default tseslint.config(
       drizzle,
     },
     extends: [
+      ...pluginQuery.configs["flat/recommended"],
       ...tseslint.configs.recommended,
       ...tseslint.configs.recommendedTypeChecked,
       ...tseslint.configs.stylisticTypeChecked,
